@@ -274,7 +274,7 @@ else:
                 st.warning("⚠️ Could not find a `data.yaml` configuration file in your zip folder.")
 
     # ==========================================
-    # TAB 2: TEST ON PICTURES & VIDEOS
+    # TAB 2: TEST ON PICTURES, VIDEOS & WEBCAM
     # ==========================================
     with tab_infer:
         st.markdown("### 🎯 Step 2: High-Speed Vision Inference Studio")
@@ -299,7 +299,7 @@ else:
 
         if active_model is not None:
             st.markdown("---")
-            media_type = st.selectbox("Select Target Media Stream", ["🖼️ Picture (Image)", "🎞️ Video Stream"])
+            media_type = st.selectbox("Select Target Media Stream", ["🖼️ Picture (Image)", "🎞️ Video Stream", "📸 Live Webcam Snapshot"])
             confidence_threshold = st.slider("Detection Confidence Threshold", min_value=0.05, max_value=1.0, value=0.35, step=0.05)
 
             if media_type == "🖼️ Picture (Image)":
@@ -370,3 +370,17 @@ else:
                                 mime="video/mp4",
                                 use_container_width=True
                             )
+
+            elif media_type == "📸 Live Webcam Snapshot":
+                st.markdown("### 📸 Live Webcam Real-Time Detection")
+                camera_image = st.camera_input("Take a snapshot from your live webcam")
+                
+                if camera_image is not None:
+                    webcam_img = Image.open(camera_image)
+                    if st.button("🔍 RUN AI DETECTION ON WEBCAM FRAME", type="primary", use_container_width=True):
+                        with st.spinner("⚡ Running AI inference on webcam capture..."):
+                            results = active_model(webcam_img, conf=confidence_threshold)
+                            res_plotted = results[0].plot()
+                            res_webcam_img = Image.fromarray(cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB))
+                            
+                            st.image(res_webcam_img, caption="🔥 Real-Time Webcam Detection Result", use_container_width=True)
