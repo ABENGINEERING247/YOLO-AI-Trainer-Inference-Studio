@@ -112,38 +112,53 @@ st.markdown("""
         border: 2px solid #000000 !important;
     }
 
-    /* English Guide Book Box Style (Light Background with Pure Black Text) */
-    .english-guide-box {
+    /* Comprehensive English Guide Book Style */
+    .comprehensive-guide-box {
         background-color: #FFFDF0 !important;
         border: 3px solid #F59E0B !important;
         border-radius: 16px;
-        padding: 30px;
+        padding: 35px;
         margin-top: 20px;
         direction: ltr;
         text-align: left;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     }
-    .english-guide-box h2, 
-    .english-guide-box h3, 
-    .english-guide-box h4, 
-    .english-guide-box p, 
-    .english-guide-box li, 
-    .english-guide-box b {
+    .comprehensive-guide-box h2, 
+    .comprehensive-guide-box h3, 
+    .comprehensive-guide-box h4, 
+    .comprehensive-guide-box p, 
+    .comprehensive-guide-box li, 
+    .comprehensive-guide-box b, 
+    .comprehensive-guide-box code {
         color: #000000 !important;
     }
-    .english-guide-box h2 {
-        font-size: 2rem;
-        margin-bottom: 10px;
+    .comprehensive-guide-box h2 {
+        font-size: 2.2rem;
+        margin-bottom: 5px;
         color: #B45309 !important;
+        font-weight: 900;
     }
-    .english-guide-box h4 {
-        font-size: 1.3rem;
-        margin-top: 20px;
+    .comprehensive-guide-box h3 {
+        font-size: 1.5rem;
+        margin-top: 25px;
+        color: #D97706 !important;
+        border-bottom: 2px solid #FCD34D;
+        padding-bottom: 5px;
+    }
+    .comprehensive-guide-box h4 {
+        font-size: 1.2rem;
+        margin-top: 15px;
         color: #1E3A8A !important;
     }
-    .english-guide-box p, .english-guide-box li {
+    .comprehensive-guide-box p, .comprehensive-guide-box li {
         font-size: 1.05rem;
-        line-height: 1.6;
+        line-height: 1.7;
+    }
+    .comprehensive-guide-box code {
+        background-color: #FEF3C7 !important;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -161,7 +176,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Create Tabs for Navigation
-tab_train, tab_infer, tab_guide = st.tabs(["🚀 Train Custom YOLO Model", "🎥 High-Speed Media Inference Studio", "📖 Guide Book"])
+tab_train, tab_infer, tab_guide = st.tabs(["🚀 Train Custom YOLO Model", "🎥 High-Speed Media Inference Studio", "📖 Comprehensive Guide Book"])
 
 # ==========================================
 # TAB 1: TRAIN MODEL
@@ -363,39 +378,62 @@ with tab_infer:
                         )
 
 # ==========================================
-# TAB 3: ENGLISH GUIDE BOOK MANUAL
+# TAB 3: COMPREHENSIVE ENGLISH GUIDE BOOK
 # ==========================================
 with tab_guide:
     st.markdown("""
-        <div class="english-guide-box">
-            <h2>📖 YOLO Model Training & Usage Guide Book</h2>
-            <p><b>Architect & Developer:</b> Engr. Bilal Mehmood (Certified Generative & Agentic AI Application Developer)</p>
+        <div class="comprehensive-guide-box">
+            <h2>📖 Comprehensive Guide Book: YOLO AI Power Studio</h2>
+            <p><b>Lead Architect & Developer:</b> Engr. Bilal Mehmood (Certified Generative & Agentic AI Application Developer)</p>
             <hr style="border-color: #F59E0B; margin: 15px 0;">
             
-            <h4>Step 1: Preparing Your Dataset</h4>
-            <p>To train a custom object detection model, ensure your dataset is structured according to the standard Ultralytics YOLO format and compressed into a <b>.zip</b> file. The directory structure inside the zip should look like this:</p>
+            <h3>1. Project Overview & Architecture</h3>
+            <p>The <b>YOLO AI Power Studio</b> is a state-of-the-art, high-performance Streamlit application designed for end-to-end computer vision workflows. It bridges the gap between custom dataset training and real-time inference without requiring complex command-line scripts. The platform supports multiple generations of Ultralytics YOLO models (YOLOv8, YOLOv9, YOLOv10, and YOLOv11) and provides automated packaging for `.pt` weight deployment.</p>
+
+            <h3>2. Dataset Structure and Preparation</h3>
+            <p>To successfully train a custom object detection model, your dataset must strictly adhere to the standard <b>YOLO Directory Format</b> and be compressed into a single <code>.zip</code> archive before uploading.</p>
+            
+            <h4>Required Directory Layout inside the `.zip`:</h4>
+            <pre style="background: #FEF3C7; padding: 12px; border-radius: 6px; border: 1px solid #F59E0B;">
+my_custom_dataset.zip
+│
+├── data.yaml          # Configuration file defining classes and paths
+├── train/
+│   ├── images/        # Training pictures (.jpg, .png)
+│   └── labels/        # Bounding box text files (.txt matching image names)
+└── val/
+    ├── images/        # Validation pictures for evaluation
+    └── labels/        # Validation bounding box text files
+            </pre>
+
+            <h4>Detailed Explanation of Components:</h4>
             <ul>
-                <li><b>data.yaml:</b> A configuration file specifying class names, number of classes, and paths to training/validation image directories.</li>
-                <li><b>train/:</b> Contains subfolders for <code>images/</code> (.jpg/.png) and corresponding <code>labels/</code> (.txt bounding box coordinate files).</li>
-                <li><b>val/:</b> Contains validation images and label text files used for evaluating model performance.</li>
+                <li><b>data.yaml:</b> Contains paths to training and validation directories, the total number of classes (<code>nc</code>), and a list of class names (<code>names: ['cat', 'dog', ...]</code>).</li>
+                <li><b>Label Files (.txt):</b> Each image must have a corresponding `.txt` file where every line represents an object: <code>[class_id x_center y_center width height]</code> normalized between 0 and 1.</li>
             </ul>
 
-            <h4>Step 2: Training Your Model</h4>
-            <p>Navigate to the <b>"Train Custom YOLO Model"</b> tab in the application:</p>
+            <h3>3. Step-by-Step Guide: Training a Custom Model</h3>
+            <p>Follow these steps under the <b>"Train Custom YOLO Model"</b> tab:</p>
             <ul>
-                <li>Select your preferred YOLO base architecture (Choose from YOLOv8, YOLOv9, YOLOv10, or the state-of-the-art YOLOv11 variants).</li>
-                <li>Adjust training hyperparameters such as <b>Epochs</b>, <b>Image Resolution</b>, and <b>Batch Size</b>.</li>
-                <li>Upload your formatted dataset <b>.zip</b> file.</li>
-                <li>Click <b>"IGNITE MODEL TRAINING NOW"</b> to start training. Once complete, you can download your optimized <code>best.pt</code> weights packaged inside a `.zip` archive.</li>
+                <li><b>Choose Base Architecture:</b> Select from lightweight nano models (e.g., <code>yolov11n.pt</code>) for speed or heavy-duty models (e.g., <code>yolov11l.pt</code> or <code>yolov9e.pt</code>) for maximum accuracy.</li>
+                <li><b>Configure Hyperparameters:</b> 
+                    <ul>
+                        <li><b>Epochs:</b> Define how many complete passes the training algorithm makes over the dataset (recommended: 10 to 50+).</li>
+                        <li><b>Image Resolution:</b> Choose input sizing (320px for speed, 640px for balanced performance, 1024px for fine-grained small objects).</li>
+                        <li><b>Batch Size:</b> Set the number of images processed per training step based on available hardware memory.</li>
+                    </ul>
+                </li>
+                <li><b>Upload & Train:</b> Upload your `.zip` dataset. The app automatically extracts files, locates your `data.yaml`, and initiates training upon clicking <b>"IGNITE MODEL TRAINING NOW"</b>.</li>
+                <li><b>Download Weights:</b> Once training concludes, your optimized <code>best.pt</code> weights are packaged into a downloadable `.zip` archive for deployment.</li>
             </ul>
 
-            <h4>Step 3: Running Inference on Images and Videos</h4>
-            <p>Switch to the <b>"High-Speed Media Inference Studio"</b> tab:</p>
+            <h3>4. Step-by-Step Guide: Inference Studio</h3>
+            <p>Switch to the <b>"High-Speed Media Inference Studio"</b> tab to test your models:</p>
             <ul>
-                <li>Choose between using your recently trained model or uploading a custom <code>.pt</code> weights file.</li>
-                <li>Select your target media stream: <b>Picture (Image)</b> or <b>Video Stream</b>.</li>
-                <li>Fine-tune the <b>Confidence Threshold</b> slider to filter detection sensitivity.</li>
-                <li>Upload your file, run detection, and instantly preview or download your annotated output media.</li>
+                <li><b>Model Selection:</b> Instantly load your recently trained session model or upload any external <code>.pt</code> weights file.</li>
+                <li><b>Confidence Threshold:</b> Adjust the slider (0.05 to 1.0) to filter out weak detections and fine-tune prediction sensitivity.</li>
+                <li><b>Image Inference:</b> Upload JPG/PNG files, execute detection, and view bounding boxes overlaid with confidence scores and class labels.</li>
+                <li><b>Video Processing:</b> Upload MP4/AVI video files. The application extracts frame dimensions, processes each frame through the neural network with hardware acceleration, re-encodes the stream using H.264 codecs, and provides an instant preview and download button for the annotated video.</li>
             </ul>
         </div>
     """, unsafe_allow_html=True)
