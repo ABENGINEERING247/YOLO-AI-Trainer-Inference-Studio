@@ -16,7 +16,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- High-Contrast & Energetic Styling ---
+# --- High-Contrast Styling (Black Text on Uploaders & Bright UI) ---
 st.markdown("""
     <style>
     /* Global App Background & High Contrast Font */
@@ -26,7 +26,7 @@ st.markdown("""
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* Force All Text Elements to High Contrast White/Bright */
+    /* Force General Text Elements to White */
     h1, h2, h3, h4, h5, h6, p, span, label, div {
         color: #FFFFFF !important;
     }
@@ -89,12 +89,28 @@ st.markdown("""
         color: #60A5FA !important;
     }
 
-    /* File Uploader & Inputs Contrast Enhancement */
+    /* --- UPLOAD BUTTONS & BOXES WITH BLACK TEXT --- */
     [data-testid="stFileUploader"] {
-        background-color: #1F2937;
-        border: 2px dashed #4B5563;
-        border-radius: 12px;
-        padding: 15px;
+        background-color: #F8FAFC !important;
+        border: 2px dashed #3B82F6 !important;
+        border-radius: 12px !important;
+        padding: 20px !important;
+        color: #000000 !important;
+    }
+    [data-testid="stFileUploader"] section, 
+    [data-testid="stFileUploader"] span, 
+    [data-testid="stFileUploader"] small, 
+    [data-testid="stFileUploader"] div, 
+    [data-testid="stFileUploader"] p {
+        color: #000000 !important;
+        font-weight: 700 !important;
+    }
+    /* Browse files button inside uploader */
+    [data-testid="stFileUploader"] button {
+        background-color: #FF8C00 !important;
+        color: #000000 !important;
+        font-weight: 900 !important;
+        border: 2px solid #000000 !important;
     }
     </style>
 """, unsafe_allow_html=True)
