@@ -16,14 +16,19 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- Energetic High-Impact Styling ---
+# --- High-Contrast & Energetic Styling ---
 st.markdown("""
     <style>
-    /* Energetic App Background & Global Font */
+    /* Global App Background & High Contrast Font */
     html, body, [data-testid="stAppViewContainer"], .stApp {
-        background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%) !important;
-        color: #F8FAFC !important;
+        background-color: #0B0F19 !important;
+        color: #FFFFFF !important;
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Force All Text Elements to High Contrast White/Bright */
+    h1, h2, h3, h4, h5, h6, p, span, label, div {
+        color: #FFFFFF !important;
     }
 
     /* Vibrant Top Header Banner */
@@ -35,55 +40,61 @@ st.markdown("""
         text-align: center;
         margin-bottom: 25px;
         box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4);
-        animation: pulseGlow 3s infinite alternate;
     }
-    @keyframes pulseGlow {
-        0% { box-shadow: 0 10px 20px rgba(255, 69, 0, 0.3); }
-        100% { box-shadow: 0 15px 35px rgba(255, 140, 0, 0.6); }
+    .app-header-banner h1, .app-header-banner p, .app-header-banner b {
+        color: #000000 !important;
     }
     .app-header-banner h1 {
-        margin: 0;
-        font-size: 2.8rem;
+        font-size: 2.6rem;
         font-weight: 900;
-        letter-spacing: 0.5px;
-        color: #000000 !important;
         text-transform: uppercase;
+        margin: 0;
     }
     .app-header-banner p {
-        margin: 10px 0 0 0;
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #1A1A1A !important;
+        font-size: 1.15rem;
+        font-weight: 800;
+        margin-top: 8px;
     }
 
-    /* Sidebar Styling */
+    /* Sidebar High Contrast Theme */
     [data-testid="stSidebar"] {
-        background-color: #1E293B !important;
-        border-right: 2px solid #334155;
+        background-color: #111827 !important;
+        border-right: 2px solid #1F2937;
+    }
+    [data-testid="stSidebar"] label, [data-testid="stSidebar"] span {
+        color: #F3F4F6 !important;
+        font-weight: 600 !important;
     }
 
-    /* Energetic Metric & Container Cards */
+    /* High Contrast Metric Cards */
     div[data-testid="stMetric"] {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border: 2px solid #FF8C00 !important;
-        border-radius: 14px !important;
+        background-color: #1F2937 !important;
+        border: 2px solid #3B82F6 !important;
+        border-radius: 12px !important;
         padding: 15px !important;
-        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.15);
     }
     div[data-testid="stMetricValue"] {
-        color: #FFD700 !important;
+        color: #60A5FA !important;
         font-weight: 900 !important;
     }
     div[data-testid="stMetricLabel"] {
-        color: #E2E8F0 !important;
+        color: #9CA3AF !important;
         font-weight: 700 !important;
     }
 
-    /* Tab Header Styling */
+    /* Tab Header High Contrast */
     button[data-baseweb="tab"] {
         font-weight: 800 !important;
         font-size: 1.1rem !important;
-        color: #38BDF8 !important;
+        color: #60A5FA !important;
+    }
+
+    /* File Uploader & Inputs Contrast Enhancement */
+    [data-testid="stFileUploader"] {
+        background-color: #1F2937;
+        border: 2px dashed #4B5563;
+        border-radius: 12px;
+        padding: 15px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -111,7 +122,7 @@ with tab_train:
     
     col_s1, col_s2 = st.columns(2)
     with col_s1:
-        # ALL YOLO VERSIONS IN DROPDOWN
+        # ALL YOLO VERSIONS DROPDOWN
         model_size = st.selectbox(
             "Select YOLO Base Architecture", 
             [
@@ -133,11 +144,9 @@ with tab_train:
                 "yolov11m.pt (YOLOv11 Medium 🔥)",
                 "yolov11l.pt (YOLOv11 Large 🔥)"
             ],
-            index=9 # Defaults to yolov11n.pt
+            index=9
         )
-        # Clean model filename string (extract pure weights filename)
         clean_model_name = model_size.split(" ")[0]
-
         epochs = st.slider("Training Epochs", min_value=1, max_value=100, value=10, step=1)
     with col_s2:
         img_size = st.selectbox("Image Resolution (Pixels)", [320, 416, 640, 1024], index=2)
@@ -157,7 +166,6 @@ with tab_train:
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(dataset_dir)
 
-        # Locate data.yaml
         yaml_path = None
         for root, dirs, files in os.walk(dataset_dir):
             for file in files:
@@ -193,7 +201,6 @@ with tab_train:
                         st.balloons()
                         st.success("🎉 Training complete! Your custom high-performance .pt model is fully primed and ready.")
                         
-                        # Package into zip for download
                         zip_output_path = os.path.join(temp_dir, "trained_model_weights.zip")
                         with zipfile.ZipFile(zip_output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
                             zipf.write(persistent_weights, arcname="best.pt")
@@ -211,7 +218,7 @@ with tab_train:
                     else:
                         st.error("⚠️ Training finished, but weights file was not generated.")
         else:
-            st.warning("⚠️ Could not find a `data.yaml` configuration file in your zip folder. Please verify your YOLO dataset structure.")
+            st.warning("⚠️ Could not find a `data.yaml` configuration file in your zip folder.")
 
 # ==========================================
 # TAB 2: TEST ON PICTURES & VIDEOS
