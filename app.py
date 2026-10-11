@@ -111,61 +111,42 @@ st.markdown("""
         font-weight: 900 !important;
         border: 2px solid #000000 !important;
     }
-
-    /* Comprehensive English Guide Book Style */
-    .comprehensive-guide-box {
-        background-color: #FFFDF0 !important;
-        border: 3px solid #F59E0B !important;
-        border-radius: 16px;
-        padding: 35px;
-        margin-top: 20px;
-        direction: ltr;
-        text-align: left;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-    }
-    .comprehensive-guide-box h2, 
-    .comprehensive-guide-box h3, 
-    .comprehensive-guide-box h4, 
-    .comprehensive-guide-box p, 
-    .comprehensive-guide-box li, 
-    .comprehensive-guide-box b, 
-    .comprehensive-guide-box code {
-        color: #000000 !important;
-    }
-    .comprehensive-guide-box h2 {
-        font-size: 2.2rem;
-        margin-bottom: 5px;
-        color: #B45309 !important;
-        font-weight: 900;
-    }
-    .comprehensive-guide-box h3 {
-        font-size: 1.5rem;
-        margin-top: 25px;
-        color: #D97706 !important;
-        border-bottom: 2px solid #FCD34D;
-        padding-bottom: 5px;
-    }
-    .comprehensive-guide-box h4 {
-        font-size: 1.2rem;
-        margin-top: 15px;
-        color: #1E3A8A !important;
-    }
-    .comprehensive-guide-box p, .comprehensive-guide-box li {
-        font-size: 1.05rem;
-        line-height: 1.7;
-    }
-    .comprehensive-guide-box code {
-        background-color: #FEF3C7 !important;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-weight: bold;
-    }
     </style>
 """, unsafe_allow_html=True)
 
 # --- Session State Management ---
 if "trained_model_path" not in st.session_state:
     st.session_state.trained_model_path = None
+
+if "show_welcome_popup" not in st.session_state:
+    st.session_state.show_welcome_popup = True
+
+# --- POPUP ALERT / BANNER MESSAGE ---
+if st.session_state.show_welcome_popup:
+    st.markdown("""
+        <div style="
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            border: 3px solid #34D399;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        ">
+            <h2 style="color: #FFFFFF !important; margin: 0; font-size: 1.8rem; font-weight: 900;">
+                🚀 AI BASED DETECTION SYSTEM BNAANA HUA AB BILKUL ASAAN! 🔥
+            </h2>
+            <p style="color: #ECFDF5 !important; margin: 8px 0 0 0; font-size: 1.1rem; font-weight: 700;">
+                Welcome to your ultimate computer vision studio. Train models and run real-time inference effortlessly!
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col_pop1, col_pop2, col_pop3 = st.columns([2, 1, 2])
+    with col_pop2:
+        if st.button("✨ Got it! Let's Start", use_container_width=True, type="primary"):
+            st.session_state.show_welcome_popup = False
+            st.rerun()
 
 # --- TOP HEADER BANNER ---
 st.markdown("""
@@ -382,19 +363,40 @@ with tab_infer:
 # ==========================================
 with tab_guide:
     st.markdown("""
-        <div class="comprehensive-guide-box">
-            <h2>📖 Comprehensive Guide Book: YOLO AI Power Studio</h2>
-            <p><b>Lead Architect & Developer:</b> Engr. Bilal Mehmood (Certified Generative & Agentic AI Application Developer)</p>
-            <hr style="border-color: #F59E0B; margin: 15px 0;">
-            
-            <h3>1. Project Overview & Architecture</h3>
-            <p>The <b>YOLO AI Power Studio</b> is a state-of-the-art, high-performance Streamlit application designed for end-to-end computer vision workflows. It bridges the gap between custom dataset training and real-time inference without requiring complex command-line scripts. The platform supports multiple generations of Ultralytics YOLO models (YOLOv8, YOLOv9, YOLOv10, and YOLOv11) and provides automated packaging for `.pt` weight deployment.</p>
+        <div style="
+            background-color: #FFFDF0; 
+            border: 3px solid #F59E0B; 
+            border-radius: 16px; 
+            padding: 30px; 
+            margin-top: 15px;
+            color: #000000;
+        ">
+            <h1 style="color: #B45309; margin-top: 0; font-size: 2.2rem; font-weight: 900;">
+                📖 Comprehensive Guide Book: YOLO AI Power Studio
+            </h1>
+            <p style="color: #000000; font-size: 1.1rem; font-weight: 600;">
+                <b>Lead Architect & Developer:</b> Engr. Bilal Mehmood (Certified Generative & Agentic AI Application Developer)
+            </p>
+            <hr style="border-top: 2px solid #F59E0B; margin: 20px 0;">
 
-            <h3>2. Dataset Structure and Preparation</h3>
-            <p>To successfully train a custom object detection model, your dataset must strictly adhere to the standard <b>YOLO Directory Format</b> and be compressed into a single <code>.zip</code> archive before uploading.</p>
-            
-            <h4>Required Directory Layout inside the `.zip`:</h4>
-            <pre style="background: #FEF3C7; padding: 12px; border-radius: 6px; border: 1px solid #F59E0B;">
+            <h3 style="color: #1E3A8A; font-weight: 800;">1. Project Overview & Architecture</h3>
+            <p style="color: #000000; font-size: 1.05rem; line-height: 1.7;">
+                The <b>YOLO AI Power Studio</b> is a high-performance Streamlit application designed for end-to-end computer vision workflows. 
+                It bridges the gap between custom dataset training and real-time media inference without requiring complex command-line scripts. 
+                The platform supports multiple generations of Ultralytics YOLO models (YOLOv8, YOLOv9, YOLOv10, and YOLOv11) with automated <code>.pt</code> weight packaging.
+            </p>
+
+            <h3 style="color: #1E3A8A; font-weight: 800; margin-top: 25px;">2. Dataset Structure and Preparation</h3>
+            <p style="color: #000000; font-size: 1.05rem; line-height: 1.7;">
+                To successfully train a custom object detection model, your dataset must strictly adhere to the standard <b>YOLO Directory Format</b> 
+                and be compressed into a single <code>.zip</code> archive.
+            </p>
+
+            <h4 style="color: #B45309; font-weight: 700;">Required Directory Layout inside the .zip:</h4>
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.code("""
 my_custom_dataset.zip
 │
 ├── data.yaml          # Configuration file defining classes and paths
@@ -404,36 +406,36 @@ my_custom_dataset.zip
 └── val/
     ├── images/        # Validation pictures for evaluation
     └── labels/        # Validation bounding box text files
-            </pre>
+    """, language="text")
 
-            <h4>Detailed Explanation of Components:</h4>
-            <ul>
-                <li><b>data.yaml:</b> Contains paths to training and validation directories, the total number of classes (<code>nc</code>), and a list of class names (<code>names: ['cat', 'dog', ...]</code>).</li>
-                <li><b>Label Files (.txt):</b> Each image must have a corresponding `.txt` file where every line represents an object: <code>[class_id x_center y_center width height]</code> normalized between 0 and 1.</li>
+    st.markdown("""
+        <div style="
+            background-color: #FFFDF0; 
+            border: 3px solid #F59E0B; 
+            border-radius: 16px; 
+            padding: 30px; 
+            margin-top: 15px;
+            color: #000000;
+        ">
+            <h4 style="color: #B45309; font-weight: 700; margin-top: 0;">Detailed Explanation of Components:</h4>
+            <ul style="color: #000000; font-size: 1.05rem; line-height: 1.8;">
+                <li><b>data.yaml:</b> Specifies paths to training/validation directories, total class count (<code>nc</code>), and class names list.</li>
+                <li><b>Label Files (.txt):</b> Each image must have a corresponding <code>.txt</code> file where every line represents an object: <code>[class_id x_center y_center width height]</code> normalized between 0 and 1.</li>
             </ul>
 
-            <h3>3. Step-by-Step Guide: Training a Custom Model</h3>
-            <p>Follow these steps under the <b>"Train Custom YOLO Model"</b> tab:</p>
-            <ul>
-                <li><b>Choose Base Architecture:</b> Select from lightweight nano models (e.g., <code>yolov11n.pt</code>) for speed or heavy-duty models (e.g., <code>yolov11l.pt</code> or <code>yolov9e.pt</code>) for maximum accuracy.</li>
-                <li><b>Configure Hyperparameters:</b> 
-                    <ul>
-                        <li><b>Epochs:</b> Define how many complete passes the training algorithm makes over the dataset (recommended: 10 to 50+).</li>
-                        <li><b>Image Resolution:</b> Choose input sizing (320px for speed, 640px for balanced performance, 1024px for fine-grained small objects).</li>
-                        <li><b>Batch Size:</b> Set the number of images processed per training step based on available hardware memory.</li>
-                    </ul>
-                </li>
-                <li><b>Upload & Train:</b> Upload your `.zip` dataset. The app automatically extracts files, locates your `data.yaml`, and initiates training upon clicking <b>"IGNITE MODEL TRAINING NOW"</b>.</li>
-                <li><b>Download Weights:</b> Once training concludes, your optimized <code>best.pt</code> weights are packaged into a downloadable `.zip` archive for deployment.</li>
+            <h3 style="color: #1E3A8A; font-weight: 800; margin-top: 25px;">3. Step-by-Step Guide: Training a Custom Model</h3>
+            <ul style="color: #000000; font-size: 1.05rem; line-height: 1.8;">
+                <li><b>Choose Base Architecture:</b> Select lightweight models (e.g., <code>yolov11n.pt</code>) for speed or heavy models (e.g., <code>yolov11l.pt</code>) for maximum accuracy.</li>
+                <li><b>Configure Hyperparameters:</b> Set Epochs (e.g., 10–50+), Image Resolution (320px, 640px, or 1024px), and Batch Size.</li>
+                <li><b>Upload & Train:</b> Upload your <code>.zip</code> dataset and click <b>IGNITE MODEL TRAINING NOW</b>.</li>
+                <li><b>Download Weights:</b> After training completes, download your <code>best.pt</code> weights in a zip archive.</li>
             </ul>
 
-            <h3>4. Step-by-Step Guide: Inference Studio</h3>
-            <p>Switch to the <b>"High-Speed Media Inference Studio"</b> tab to test your models:</p>
-            <ul>
-                <li><b>Model Selection:</b> Instantly load your recently trained session model or upload any external <code>.pt</code> weights file.</li>
-                <li><b>Confidence Threshold:</b> Adjust the slider (0.05 to 1.0) to filter out weak detections and fine-tune prediction sensitivity.</li>
-                <li><b>Image Inference:</b> Upload JPG/PNG files, execute detection, and view bounding boxes overlaid with confidence scores and class labels.</li>
-                <li><b>Video Processing:</b> Upload MP4/AVI video files. The application extracts frame dimensions, processes each frame through the neural network with hardware acceleration, re-encodes the stream using H.264 codecs, and provides an instant preview and download button for the annotated video.</li>
+            <h3 style="color: #1E3A8A; font-weight: 800; margin-top: 25px;">4. Step-by-Step Guide: Inference Studio</h3>
+            <ul style="color: #000000; font-size: 1.05rem; line-height: 1.8;">
+                <li><b>Model Selection:</b> Load your session-trained model or upload external <code>.pt</code> weights.</li>
+                <li><b>Confidence Threshold:</b> Adjust the slider (0.05 to 1.0) to set sensitivity.</li>
+                <li><b>Image & Video Inference:</b> Upload media files, execute real-time detection, preview bounding boxes, and download annotated output files.</li>
             </ul>
         </div>
     """, unsafe_allow_html=True)
