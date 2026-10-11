@@ -16,7 +16,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- High-Contrast Styling (Black Text on Uploaders & Bright UI) ---
+# --- High-Contrast & Energetic Styling ---
 st.markdown("""
     <style>
     /* Global App Background & High Contrast Font */
@@ -89,7 +89,7 @@ st.markdown("""
         color: #60A5FA !important;
     }
 
-    /* --- UPLOAD BUTTONS & BOXES WITH BLACK TEXT --- */
+    /* UPLOAD BUTTONS & BOXES WITH BLACK TEXT */
     [data-testid="stFileUploader"] {
         background-color: #F8FAFC !important;
         border: 2px dashed #3B82F6 !important;
@@ -105,12 +105,26 @@ st.markdown("""
         color: #000000 !important;
         font-weight: 700 !important;
     }
-    /* Browse files button inside uploader */
     [data-testid="stFileUploader"] button {
         background-color: #FF8C00 !important;
         color: #000000 !important;
         font-weight: 900 !important;
         border: 2px solid #000000 !important;
+    }
+
+    /* Urdu Guide Book Box Style */
+    .urdu-guide-box {
+        background-color: #1E293B;
+        border: 2px solid #38BDF8;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 20px;
+        direction: rtl;
+        text-align: right;
+    }
+    .urdu-guide-box h3, .urdu-guide-box h4, .urdu-guide-box p, .urdu-guide-box li {
+        color: #F8FAFC !important;
+        font-family: 'Jameel Noori Nastaleeq', 'Urdu Typesetting', Arial, sans-serif;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -127,8 +141,8 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Create Tabs for Navigation
-tab_train, tab_infer = st.tabs(["🚀 Train Custom YOLO Model", "🎥 High-Speed Media Inference Studio"])
+# Create Tabs for Navigation (including the Urdu Guide Book tab)
+tab_train, tab_infer, tab_guide = st.tabs(["🚀 Train Custom YOLO Model", "🎥 High-Speed Media Inference Studio", "📖 رہنمای کتاب (Urdu Guide Book)"])
 
 # ==========================================
 # TAB 1: TRAIN MODEL
@@ -138,23 +152,18 @@ with tab_train:
     
     col_s1, col_s2 = st.columns(2)
     with col_s1:
-        # ALL YOLO VERSIONS DROPDOWN
         model_size = st.selectbox(
             "Select YOLO Base Architecture", 
             [
-                # YOLOv8
                 "yolov8n.pt (Nano - Fastest)", 
                 "yolov8s.pt (Small - Balanced)", 
                 "yolov8m.pt (Medium - High Accuracy)",
                 "yolov8l.pt (Large - Heavy Duty)",
-                # YOLOv9
                 "yolov9c.pt (YOLOv9 Compact)",
                 "yolov9e.pt (YOLOv9 Extended)",
-                # YOLOv10
                 "yolov10n.pt (YOLOv10 Nano)",
                 "yolov10s.pt (YOLOv10 Small)",
                 "yolov10m.pt (YOLOv10 Medium)",
-                # YOLOv11 (Latest State-of-the-Art)
                 "yolov11n.pt (YOLOv11 Nano 🔥)",
                 "yolov11s.pt (YOLOv11 Small 🔥)",
                 "yolov11m.pt (YOLOv11 Medium 🔥)",
@@ -333,3 +342,41 @@ with tab_infer:
                             mime="video/mp4",
                             use_container_width=True
                         )
+
+# ==========================================
+# TAB 3: URDU GUIDE BOOK MANUAL
+# ==========================================
+with tab_guide:
+    st.markdown("""
+        <div class="urdu-guide-box">
+            <h2>📖 وائے او ایل او (YOLO) ماڈل ٹریننگ اور استعمال کی رہنما کتاب</h2>
+            <p><b>مصنف و آرکیٹیکٹ:</b> انجینئر بلال محمود (سٹیفائیڈ جنریٹیو اینڈ ایجنٹک اے آئی ایپلیکیشن ڈویلپر)</p>
+            <hr style="border-color: #38BDF8;">
+            
+            <h4>مرحلہ 1: ڈیٹا سیٹ کی تیاری (Dataset Preparation)</h4>
+            <p>اپنے ماڈل کو ٹرین کرنے کے لیے آپ کے پاس ایک مکمل YOLO فارمیٹ کا ڈیٹا سیٹ ہونا لازمی ہے جسے زپ (.zip) فائل میں تبدیل کیا گیا ہو۔ اس زپ فولڈر میں درج ذیل ساخت (Structure) ہونی چاہیے:</p>
+            <ul>
+                <li><b>data.yaml فائل:</b> جس میں کلاسز کے نام اور ٹریننگ/ویلیڈیشن فولڈرز کے راستے (paths) لکھے ہوں۔</li>
+                <li><b>train فولڈر:</b> اس میں تصاویر (images) اور ان کے ٹیکسٹ لیبلز (.txt) موجود ہوں۔</li>
+                <li><b>val فولڈر:</b> اس میں ٹیسٹنگ کے لیے تصاویر اور لیبلز ہوں۔</li>
+            </ul>
+
+            <h4>مرحلہ 2: ماڈل کی تربیت (Model Training)</h4>
+            <p>پہلے ٹیب <b>"Train Custom YOLO Model"</b> میں جائیں:</p>
+            <ul>
+                <li>اپنا پسندیدہ YOLO ورژن منتخب کریں (مثلاً YOLOv8, YOLOv9, YOLOv10 یا جدید ترین YOLOv11)۔</li>
+                <li>ٹریننگ کے لیے Epochs کی تعداد (مثلاً 10 یا 20) اور امیج ریزولوشن سیٹ کریں۔</li>
+                <li>اپنا زپ ڈیٹا سیٹ اپ لوڈ کریں اور <b>"IGNITE MODEL TRAINING NOW"</b> کے بٹن پر کلک کریں۔</li>
+                <li>ٹریننگ مکمل ہونے کے بعد آپ اپنے ٹرین شدہ ماڈل کی ویٹس فائل (.pt) کو زپ فارمیٹ میں ڈاؤن لوڈ کر سکتے ہیں۔</li>
+            </ul>
+
+            <h4>مرحلہ 3: تصاویر اور ویڈیوز پر ٹیسٹنگ (Inference Studio)</h4>
+            <p>دوسرے ٹیب <b>"High-Speed Media Inference Studio"</b> میں آئیں:</p>
+            <ul>
+                <li>حال ہی میں ٹرین کیا ہوا ماڈل منتخب کریں یا اپنی مرضی کی کوئی بھی `.pt` فائل اپ لوڈ کریں۔</li>
+                <li>تصویر (Picture) یا ویڈیو اسٹریم (Video Stream) کا انتخاب کریں۔</li>
+                <li>کانفیڈنس تھریشولڈ (Confidence Threshold) سیٹ کریں اور آبجیکٹ ڈیٹیکشن رزلٹس دیکھیں۔</li>
+                <li>ویڈیو پروسیسنگ کے بعد آپ رزلٹ والی ویڈیو کو آسانی سے ڈاؤن لوڈ بھی کر سکتے ہیں۔</li>
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
